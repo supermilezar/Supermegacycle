@@ -83,9 +83,9 @@ end
 
 local function infokan(description, isSafe)
     if DENZ.Input_Webhook then
-        local color = 0 -- default color (merah)
+        local color = 65280 -- default color (merah)
         if isSafe then
-            color = 65280 -- kode warna hijau untuk 'safe'
+            color = 0 -- kode warna hijau untuk 'safe'
         end
 
         local script = [[
