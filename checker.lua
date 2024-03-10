@@ -81,26 +81,22 @@ local function UnReady(id)
     return count
 end
 
-local function infokan(description, isSafe)
+local function infokan(description)
     if DENZ.Input_Webhook then
-        local color = 65280 -- default color (merah)
-        if isSafe then
-            color = 64829 -- kode warna hijau untuk 'safe'
-        end
-
         local script = [[
             $webHookUrl = "]]..DENZ.Webhook..[["
-            $content = @{
-                "embeds": [{
-                    "title": "Information",
-                    "description": "]]..description..[[",
-                    "color": ]]..color..[[
-                }]
+            $payload = @{
+                embeds = @(
+                    @{
+                        title = "";
+                        description = "]]..description..[[";
+                        color = 65280
+                    }
+                )
             }
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-RestMethod -Uri $webHookUrl -Body ($content | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+            Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
         ]]
-
         local pipe = io.popen("powershell -command -", "w")
         pipe:write(script)
         pipe:close()
