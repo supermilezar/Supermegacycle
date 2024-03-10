@@ -3,14 +3,6 @@ Total_Nuked = 0
 totalFossil = 0
 nuked = false
 
-emot_safe = "<a:online2:1174926338164002818:>"
-emot_nuked = "<a:OFFLINE:1142826338307280997:>"
-emot_toxic = "<:toxic:1156965113883017277>"
-emot_tready = "<:Excellent:964672053624078407:>"
-emot_nready = "<:Verypoor:964672269911748689:>"
-emot_api = "<:fire:>"
-emot_fossil = "<:Fossil:1156652797752791110:>"
-
 local function countScannedFarm()
     local totalScanned = 0
     for _, _ in pairs(DENZ.FarmList) do
@@ -88,19 +80,17 @@ local function UnReady(id)
     end
     return count
 end
+User
 local function infokan(description)
     if DENZ.Input_Webhook then
         local script = [[
             $webHookUrl = "]]..DENZ.Webhook..[["
-            $content = @{
-                "embeds": [{
-                    "title": "Informasi",
-                    "description": "]]..description..[[",
-                    "color": 16711680
-                }]
+            $content = "]]..description..[["
+            $payload = @{
+                content = $content 
             }
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-RestMethod -Uri $webHookUrl -Body ($content | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+            Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
         ]]
         local pipe = io.popen("powershell -command -", "w")
         pipe:write(script)
