@@ -3,14 +3,6 @@ Total_Nuked = 0
 totalFossil = 0
 nuked = false
 
-emot_safe = "<a:online2:1174926338164002818:>"
-emot_nuked = "<a:OFFLINE:1142826338307280997:>"
-emot_toxic = "<:toxic:1156965113883017277>"
-emot_tready = "<:Excellent:964672053624078407:>"
-emot_nready = "<:Verypoor:964672269911748689:>"
-emot_api = "<:fire:>"
-emot_fossil = "<:Fossil:1156652797752791110:>"
-
 local function countScannedFarm()
     local totalScanned = 0
     for _, _ in pairs(DENZ.FarmList) do
@@ -88,25 +80,31 @@ local function UnReady(id)
     end
     return count
 end
+
 local function infokan(description)
     if DENZ.Input_Webhook then
         local script = [[
             $webHookUrl = "]]..DENZ.Webhook..[["
-            $content = @{
-                "embeds": [{
-                    "title": "Information",
-                    "description": "]]..description..[[",
-                    "color": 16711680
-                }]
+            $payload = @{
+                embeds = @(
+                    @{
+                        title = "";
+                        description = "]]..description..[[";
+                        color = 16711680
+                    }
+                )
             }
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-RestMethod -Uri $webHookUrl -Body ($content | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+            Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
         ]]
         local pipe = io.popen("powershell -command -", "w")
         pipe:write(script)
         pipe:close()
     end
 end
+
+
+infokan("#  <a:zap:1008046491727835136> DEENZ CHECKERFARM")
 
 log("-----------------------------------------------")
 while true do
@@ -126,7 +124,7 @@ while true do
             if posil > 0 then
                 totalFossil = totalFossil + posil
             end
-            infokan("# Check farm DEENZ")
+		
             log("Farm ".. farm .. " scanned")
             log(farm:upper().." <a:online2:1174926338164002818>SAFE | ".."[**"..treek.."**] <:Excellent:964672053624078407>Ready [**"..treeks.."**] <:Verypoor:964672269911748689>unReady  | [**"..posil.."**] <:FossilRock:1156652797752791110>Fossil[**"..toxic.."**] <:toxic:1156965113883017277>Toxic  [**"..fire.."**] Api")
             infokan(farm:upper().." <a:online2:1174926338164002818>SAFE | ".."[**"..treek.."**] <:Excellent:964672053624078407>Ready [**"..treeks.."**] <:Verypoor:964672269911748689>unReady  | [**"..posil.."**] <:FossilRock:1156652797752791110>Fossil[**"..toxic.."**] <:toxic:1156965113883017277>Toxic  [**"..fire.."**] Api")
@@ -141,12 +139,9 @@ while true do
         end
     end
     if not DENZ.Loop then
-        infokan("**Total Nuked [**"..Total_Nuked.."**] World**")
+        infokan("**Total Nuked ["..Total_Nuked.."] World\n Total Fossil ["..totalFossil.."]\n **")
         log("Total Nuked "..Total_Nuked.." World\n")
-        infokan("**Total Fossil ["..totalFossil.."]**")
         log("Total Nuked "..TotalFossil.." World\n")
-        infokan("**Total World ["..totalScanned.."]**")
-        log("Total World "..totalScanned.." World\n")
         break
     end
 end
