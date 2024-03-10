@@ -116,7 +116,7 @@ while true do
             if posil > 0 then
                 totalFossil = totalFossil + posil
             end
-            infokan("# <a:zap:1008046491727835136> DEENZ FARMCHECKER")
+
             log("Farm ".. farm .. " scanned")
             log(farm:upper().." <a:online2:1174926338164002818>SAFE | ".."[**"..treek.."**] <:Excellent:964672053624078407>Ready [**"..treeks.."**] <:Verypoor:964672269911748689>unReady  | [**"..posil.."**] <:FossilRock:1156652797752791110>Fossil[**"..toxic.."**] <:toxic:1156965113883017277>Toxic  [**"..fire.."**] Api")
             infokan(farm:upper().." <a:online2:1174926338164002818>SAFE | ".."[**"..treek.."**] <:Excellent:964672053624078407>Ready [**"..treeks.."**] <:Verypoor:964672269911748689>unReady  | [**"..posil.."**] <:FossilRock:1156652797752791110>Fossil[**"..toxic.."**] <:toxic:1156965113883017277>Toxic  [**"..fire.."**] Api")
