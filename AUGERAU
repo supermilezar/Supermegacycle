@@ -92,18 +92,22 @@ local function infokan(description)
     if DENZ.Input_Webhook then
         local script = [[
             $webHookUrl = "]]..DENZ.Webhook..[["
-            $content = "]]..description..[["
-            $payload = @{
-                content = $content 
+            $content = @{
+                "embeds": [{
+                    "title": "Informasi",
+                    "description": "]]..description..[[",
+                    "color": 16711680
+                }]
             }
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            Invoke-RestMethod -Uri $webHookUrl -Body ($payload | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
+            Invoke-RestMethod -Uri $webHookUrl -Body ($content | ConvertTo-Json -Depth 4) -Method Post -ContentType 'application/json'
         ]]
         local pipe = io.popen("powershell -command -", "w")
         pipe:write(script)
         pipe:close()
     end
 end
+
 log("-----------------------------------------------")
 while true do
     for index,farm in pairs(DENZ.FarmList) do
